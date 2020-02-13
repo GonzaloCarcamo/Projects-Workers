@@ -1,0 +1,83 @@
+<h2><strong>App Projects to Workers</strong></h2>
+
+
+<p id="notice"><%= notice %></p>
+
+<br>
+
+<%= form_with(url: projects_path, method: :get, local: true) do |form|%>
+
+  <%= form.text_field(:q) %>
+  <%= form.submit 'search' %>
+
+<% end %>
+
+<br>
+
+
+
+<h4>Workers</h4>
+
+<br>
+
+<table border = '1'>
+  <thead>
+    <tr>
+      <th>Worker Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workers.each do |worker| %>
+      <tr>
+        <td><%= worker.name %></td>
+        <td><%= link_to 'Show', worker %></td>
+        <td><%= link_to 'Edit', edit_worker_path(worker) %></td>
+        <td><%= link_to 'Destroy', worker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+
+
+
+<h4>Projects</h4>
+
+<br>
+
+<table border = '1'>
+  <thead>
+    <tr>
+      <th>Project Name</th>
+      <th>Worker Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td><% project.workers.each do |worker| %>
+          <%= worker.name %>
+          <%= link_to "[X]", delete_project_worker_path(project,worker), method: :delete, class: 'btn btn-success bt-sm' %>
+          <% end %>
+
+        </td>
+        <td><%= link_to 'Show', project %></td>
+        <td><%= link_to 'Edit', edit_project_path(project) %></td>
+        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= form_with(model: project.workers.build,url: projects_workers_path(project), local: true) do |f| %>
+          <%= f.text_field :name %>
+          <%= f.submit %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

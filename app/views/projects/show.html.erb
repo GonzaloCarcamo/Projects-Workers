@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<p> <strong> Name: </strong> <%= @project.name %> </p>
+
+<p> <strong> Integrantes: </strong> </p>
+
+<% @project.workers.each do |worker| %>
+
+<p> <%= worker.name %> </p>
+
+<% end %>
